@@ -1,0 +1,4 @@
+--require ./test/helpers.js
+--reporter spec
+--slow 5000
+--exit
