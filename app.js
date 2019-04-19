@@ -7,7 +7,7 @@ var util = require('util');
 var bodyParser  = require('body-parser');
 var multer = require('multer');
 var morgan = require('morgan');
-require('shelljs/global');
+require('shelljs/global'); 
 
 app.use(bodyParser.json({limit: '25mb'}));
 app.use(bodyParser.urlencoded({limit: '25mb', extended: true}));
@@ -30,6 +30,12 @@ app.use(function(req, res, next) {
 app.get('/', function (req, res) {
    res.json({message: 'Olá Mundo!'});
 });
+
+//Routes
+aluno = require('./services/aluno');
+
+// Mouting applications.
+app.use('/alunos', aluno);
 
 module.exports = {
   app: app

@@ -13,3 +13,8 @@ global.request = supertest(app);
 global.async = async;
 global.expect = chai.expect;
 global.should = chai.should();
+
+global.cleanTable = (name, done) => {
+  var query = util.format('DELETE FROM `%s`', name);
+  db.mysqlExec(query).then((result) => {});
+}
