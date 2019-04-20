@@ -21,7 +21,7 @@ fi
 liquibase --driver=com.mysql.jdbc.Driver --logLevel=info \
      --classpath=$CONN:$SNAKEYAML \
      --changeLogFile=$CHANGELOG_FILE \
-     --url="jdbc:mysql://mysql/$DATABASE_NAME" \
+     --url="jdbc:mysql://$DB_HOST/$DATABASE_NAME" \
      --username=$DATABASE_USER \
      --password=$DB_PASSWORD \
      migrate

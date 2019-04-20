@@ -9,6 +9,7 @@ services:
     environment:
       - DB_HOST=mysql-server
       - DB_PASSWORD=y0g4rp4ss
+      - LIQUIBASE=yogar-liquibase
     volumes:
       - ../../:/app
     links:
@@ -19,7 +20,7 @@ services:
   liquibase:
     build: ../dockerfiles/liquibase
     image: yogar-liquibase
-    container_name: uea-liquibase
+    container_name: yogar-liquibase
     environment:
       - DB_PASSWORD=y0g4rp4ss
       - DB_HOST=mysql-server

@@ -9,27 +9,28 @@ services:
     environment:
       - DB_HOST=mysql-server
       - DB_PASSWORD=y0g4rp4ss
+      - LIQUIBASE=yogar-liquibase-test
       - TEST=test
     volumes:
       - ../../:/app
     links:
-      - mysql:mysql-server
+      - mysql-test:mysql-server
     depends_on:
-      - mysql
+      - liquibase-test
 
-  liquibase:
+  liquibase-test:
     build: ../dockerfiles/liquibase
     image: yogar-liquibase
-    container_name: uea-liquibase
+    container_name: yogar-liquibase-test
     environment:
       - DB_PASSWORD=y0g4rp4ss
       - DB_HOST=mysql-test
     links:
-      - mysql:mysql-server
+      - mysql-test:mysql-server
     depends_on:
-      - mysql
+      - mysql-test
 
-  mysql:
+  mysql-test:
     build: ../dockerfiles/mysql
     image: yogar-mysql-test
     container_name: yogar-db-test
@@ -38,11 +39,3 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=y0g4rp4ss
       - MYSQL_DATABASE=yogar
-    volumes:
-      - yogar-test:/var/lib/mysql
-
-volumes:
-  yogar-test:
-
-networks:
-  foo:    

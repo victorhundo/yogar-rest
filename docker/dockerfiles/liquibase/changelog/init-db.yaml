@@ -39,3 +39,39 @@ databaseChangeLog:
               - column:
                   name: senha
                   type: varchar(255)
+        - createTable:
+            tableName: professor
+            columns:
+              - column:
+                  name: uuid
+                  type: varchar(255)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: primeiroNome
+                  type: varchar(50)
+              - column:
+                  name: ultimoNome
+                  type: varchar(50)
+              - column:
+                  name: rua
+                  type: varchar(50)
+              - column:
+                  name: cidade
+                  type: varchar(50)
+              - column:
+                  name: estado
+                  type: varchar(50)
+              - column:
+                  name: cep
+                  type: int(50)
+              - column:
+                  name: email
+                  type: varchar(50)
+              - column:
+                  name: username
+                  type: varchar(50)
+              - column:
+                  name: senha
+                  type: varchar(255)

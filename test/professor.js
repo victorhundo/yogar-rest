@@ -1,6 +1,6 @@
-describe('==== ALUNO ====', () => {
+describe('==== PROFESSOR ====', () => {
 
-  var alunoModel1 = {
+  var professorModel1 = {
     "nome":{
       "primeiro":"ali",
       "ultimo":"keseroğlu"
@@ -18,7 +18,7 @@ describe('==== ALUNO ====', () => {
       }
     }
 
-  var alunoModel2 = {
+  var professorModel2 = {
     "nome":{
       "primeiro":"wilma",
       "ultimo":"kirst"
@@ -36,7 +36,7 @@ describe('==== ALUNO ====', () => {
       }
     }
 
-  var alunoModel3 = {
+  var professorModel3 = {
     "nome":{
       "primeiro":"patrice",
       "ultimo":"roche"
@@ -56,31 +56,31 @@ describe('==== ALUNO ====', () => {
 
   //Before each test we empty the database
   beforeEach((done) => {
-      cleanTable('aluno');
+      cleanTable('professor');
       done();
   });
 
-  describe('GET /alunos', () => {
-    it('it should GET all the alunos',(done) => {
+  describe('GET /professores', () => {
+    it('it should GET all the professores',(done) => {
       request
-        .post('/alunos')
-        .send(alunoModel1)
+        .post('/professores')
+        .send(professorModel1)
         .expect(201)
       .then((res) => {
       return request
-        .post('/alunos')
-        .send(alunoModel2)
-        .expect(201)
-      })
-      .then((res) => {
-      return request
-        .post('/alunos')
-        .send(alunoModel3)
+        .post('/professores')
+        .send(professorModel2)
         .expect(201)
       })
       .then((res) => {
       return request
-        .get('/alunos')
+        .post('/professores')
+        .send(professorModel3)
+        .expect(201)
+      })
+      .then((res) => {
+      return request
+        .get('/professores')
         .expect(200)
         .expect((res) => {
           res.body.length.should.equals(3);
@@ -89,9 +89,9 @@ describe('==== ALUNO ====', () => {
       .then((success) => {done()}, (error) => {done(error)});
     });
 
-    it('it should GET all the alunos', (done) => {
+    it('it should GET all the professores', (done) => {
       request
-      .get('/alunos')
+      .get('/professores')
       .expect(200)
       .expect((res) => {
         res.body.length.should.equals(0)
@@ -101,28 +101,28 @@ describe('==== ALUNO ====', () => {
 
   });
 
-  describe('GET /alunos/:id', () => {
-    it('it should GET a aluno given id', (done) => {
+  describe('GET /professores/:id', () => {
+    it('it should GET a professor given id', (done) => {
       request
-        .post('/alunos')
-        .send(alunoModel1)
+        .post('/professores')
+        .send(professorModel1)
         .expect(201)
       .then((res) => {
       return request
-        .get('/alunos/' + res.body.insertId)
+        .get('/professores/' + res.body.insertId)
         .expect(200)
       })
       .then((success) => {done()}, (error) => {done(error)});
     });
 
-    it('it should NOT GET a alunos given id', (done) => {
+    it('it should NOT GET a professores given id', (done) => {
       request
-        .post('/alunos')
-        .send(alunoModel1)
+        .post('/professores')
+        .send(professorModel1)
         .expect(201)
       .then((res) => {
       return request
-        .get('/alunos/' + res.body.insertId + 1)
+        .get('/professores/' + res.body.insertId + 1)
         .expect(200)
         .expect((res) => {
           res.body.length.should.equals(0);
@@ -134,15 +134,15 @@ describe('==== ALUNO ====', () => {
 
   });
 
-  describe('POST /alunos', () => {
-    it('it should POST a aluno ', (done) => {
+  describe('POST /professores', () => {
+    it('it should POST a professor ', (done) => {
       request
-        .post('/alunos')
-        .send(alunoModel1)
+        .post('/professores')
+        .send(professorModel1)
         .expect(201)
       .then((res) => {
       return request
-        .get('/alunos/' + res.body.insertId)
+        .get('/professores/' + res.body.insertId)
         .expect(200)
       })
       .then((success) => {done()}, (error) => {done(error)});
@@ -150,15 +150,15 @@ describe('==== ALUNO ====', () => {
 
   });
 
-  describe('DELETE /alunos/:id', () => {
-      it('it should DELETE a aluno ', (done) => {
+  describe('DELETE /professores/:id', () => {
+      it('it should DELETE a professor ', (done) => {
         request
-          .post('/alunos')
-          .send(alunoModel1)
+          .post('/professores')
+          .send(professorModel1)
           .expect(201)
         .then((res) => {
         return request
-          .delete('/alunos/' + res.body.insertId )
+          .delete('/professores/' + res.body.insertId )
           .expect(200)
           .expect((res) => {
             res.clientError.should.be.equal(false);
@@ -170,17 +170,17 @@ describe('==== ALUNO ====', () => {
       });
   });
 
-  describe('PUT /alunos/:id', () => {
-    it('it should UPDATE a aluno value', (done) => {
-      var alunoId;
+  describe('PUT /professores/:id', () => {
+    it('it should UPDATE a professor value', (done) => {
+      var professorId;
       request
-        .post('/alunos')
-        .send(alunoModel1)
+        .post('/professores')
+        .send(professorModel1)
         .expect(201)
       .then((res) => {
-      alunoId = res.body.insertId
+      professorId = res.body.insertId
       return request
-        .put('/alunos/' + alunoId)
+        .put('/professores/' + professorId)
         .send({campo: 'primeiroNome', valor: 'victor'})
         .expect(200)
         .expect((res) => {
@@ -191,7 +191,7 @@ describe('==== ALUNO ====', () => {
       })
       .then((res) => {
       return request
-        .get('/alunos/' + alunoId)
+        .get('/professores/' + professorId)
         .expect(200)
       })
       .then((success) => {done()}, (error) => {done(error)});
