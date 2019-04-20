@@ -16,6 +16,18 @@ services:
     depends_on:
       - mysql
 
+  liquibase:
+    build: ../dockerfiles/liquibase
+    image: yogar-liquibase
+    container_name: uea-liquibase
+    environment:
+      - DB_PASSWORD=y0g4rp4ss
+      - DB_HOST=mysql-server
+    links:
+      - mysql:mysql-server
+    depends_on:
+      - mysql
+
   mysql:
     build: ../dockerfiles/mysql
     image: yogar-mysql

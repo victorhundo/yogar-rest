@@ -1,8 +1,8 @@
 #!/bin/bash
 cd /app
 
-#Wait MySql is Ready!
-while ! mysqladmin ping -h"$DB_HOST" -uroot -p"$DB_PASSWORD" --silent; do
+#Wait Liquibase is Down!
+while ping -q -c1 $LIQUIBASE > /dev/null; do
     sleep 1
 done
 

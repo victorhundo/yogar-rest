@@ -13,11 +13,23 @@ services:
     volumes:
       - ../../:/app
     links:
-      - mysql-test:mysql-server
+      - mysql:mysql-server
     depends_on:
-      - mysql-test
+      - mysql
 
-  mysql-test:
+  liquibase:
+    build: ../dockerfiles/liquibase
+    image: yogar-liquibase
+    container_name: uea-liquibase
+    environment:
+      - DB_PASSWORD=y0g4rp4ss
+      - DB_HOST=mysql-test
+    links:
+      - mysql:mysql-server
+    depends_on:
+      - mysql
+
+  mysql:
     build: ../dockerfiles/mysql
     image: yogar-mysql-test
     container_name: yogar-db-test
@@ -31,3 +43,6 @@ services:
 
 volumes:
   yogar-test:
+
+networks:
+  foo:    

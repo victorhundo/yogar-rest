@@ -1,0 +1,6 @@
+databaseChangeLog:
+  - preConditions:
+    - runningAs:
+        username: root
+  - include:
+      file: /changelog/init-db.yaml
