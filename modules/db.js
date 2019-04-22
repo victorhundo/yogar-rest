@@ -19,10 +19,10 @@ var db_config = {
 
 var connection = mysql.createConnection(db_config);
 
-connection.connect(function(err) {
-  if (err != null) {
-    console.err(err.code); // 'ECONNREFUSED'
-    console.err(err); // true
+connection.connect(function(error) {
+  if (error != null) {
+    console.err(error.code); // 'ECONNREFUSED'
+    console.err(error); // true
   }
 });
 

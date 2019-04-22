@@ -10,9 +10,14 @@ COPY lib/mysql-connector-java-5.1.44-bin.jar /opt/jdbc_drivers/
 COPY lib/snakeyaml-1.19.jar /opt/jdbc_drivers/
 RUN ln -s /opt/jdbc_drivers/mysql-connector-java-5.1.44-bin.jar /usr/local/bin/
 RUN ln -s /opt/jdbc_drivers/snakeyaml-1.19.jar.jar /usr/local/bin/
+RUN sed -i 's/jessie/stretch/g' /etc/apt/sources.list
+RUN rm /etc/apt/sources.list.d/jessie-backports.list
+
 
 #Install mysql-client
-RUN apt-get update && apt-get install -y \
+RUN apt-get update
+
+RUN apt-get install -y \
     mysql-client \
 && rm -rf /var/lib/apt/lists/*
 
