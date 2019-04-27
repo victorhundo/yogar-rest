@@ -54,6 +54,19 @@ describe('==== ALUNO ====', () => {
       }
     }
 
+
+    var alunoModel4 = {
+      "nome":{
+        "primeiro":"Victor Hugo",
+        "ultimo":"Fernandes de Sousa"
+      },
+      "email":"victorhundo@gmail.com",
+      "login":{
+        "username":"vhugo",
+        "senha":"mudar123",
+        }
+      }
+
   //Before each test we empty the database
   beforeEach((done) => {
       cleanTable('aluno');
@@ -139,6 +152,19 @@ describe('==== ALUNO ====', () => {
       request
         .post('/alunos')
         .send(alunoModel1)
+        .expect(201)
+      .then((res) => {
+      return request
+        .get('/alunos/' + res.body.insertId)
+        .expect(200)
+      })
+      .then((success) => {done()}, (error) => {done(error)});
+    });
+
+    it('it should POST a aluno without endereco', (done) =>{
+      request
+        .post('/alunos')
+        .send(alunoModel4)
         .expect(201)
       .then((res) => {
       return request

@@ -36,9 +36,31 @@ var _escapeId = function(uzantQuery) {
 }
 
 var _escapeArgs = function(args) {
+  var argChecked = [];
   for(var i = 0; i < args.length; i ++) {
-    args[i] = _escape(args[i]);
+    if (args[i]) {
+      var result = _escape(args[i]).split(',');
+      if (result.length > 1){
+        newObj = {}
+        for ( var j = 0; j < result.length; j++ ){
+          if (result[j].match('=')){
+            var nome = [result[j].split('=')[0]]
+            nome = nome.toString().replace(/`/g, "").trim()
+            var valor = result[j].split('=')[1]
+            newObj[nome] = valor
+          }
+        }
+        if(Object.keys(newObj).length) {
+          args[i] = newObj;
+          argChecked.push(newObj);
+        }
+      }else{
+        args[i] = _escape(args[i])
+        argChecked.push(args[i]);
+      }
+    }
   }
+  return argChecked;
 }
 
 var _mysqlExec = function(query){

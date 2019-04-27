@@ -1,14 +1,44 @@
 var util = require('util');
 var db = require('../modules/db');
 
-var _insert = function(primeiroNome, ultimoNome, rua, cidade,estado, cep, email, uuid, username,senha){
-  db.escapeArgs(arguments);
+var _insert = function(uuid, nome, email, login, endereco){
+  argsEscaped = db.escapeArgs(arguments);
+  switch (argsEscaped.length) {
+    case 5:
+      return _insertWithEndereco(uuid, nome, email, login, endereco)
+    default:
+      return _insertWithOutEndereco(uuid, nome, email, login)
+  }
+}
+
+var _insertWithEndereco = function(uuid, nome, email, login, endereco){
   var query = util.format(
-  'INSERT INTO aluno (primeiroNome, ultimoNome, rua, cidade, \
-                      estado, cep,email,uuid, username,senha)\
-   VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);',
-    primeiroNome, ultimoNome, rua, cidade, estado, cep, email, uuid, username,senha);
-  return db.mysqlExec(query);
+    'INSERT INTO aluno (\
+      primeiroNome, ultimoNome,\
+      email,uuid, \
+      username,senha,\
+      rua,estado,\
+      cidade,cep)\
+    VALUES (%s, %s, %s, %s, %s, %s,%s,%s,%s,%s);',
+    nome.primeiro, nome.ultimo,
+    email, uuid,
+    login.username, login.senha,
+    endereco.rua,endereco.estado,
+    endereco.cidade,endereco.cep);
+    return db.mysqlExec(query);
+}
+
+var _insertWithOutEndereco = function(uuid, nome, email, login){
+  var query = util.format(
+    'INSERT INTO aluno (\
+      primeiroNome, ultimoNome,\
+      email,uuid,\
+      username,senha)\
+    VALUES (%s, %s, %s, %s, %s, %s);',
+    nome.primeiro, nome.ultimo,
+    email, uuid,
+    login.username, login.senha);
+    return db.mysqlExec(query);
 }
 
 var _delete = function(id){

@@ -33,11 +33,11 @@ var _postAluno = (req, res) => {
   .then((sucess) => {
     if(sucess.length == 0){
       return Aluno.insert(
-        req.body.nome.primeiro, req.body.nome.ultimo,
-        req.body.endereco.rua, req.body.endereco.cidade,
-        req.body.endereco.estado, req.body.endereco.cep,
-        req.body.email,uuid,
-        req.body.login.username, req.body.login.senha
+        uuid,
+        req.body.nome,
+        req.body.email,
+        req.body.login,
+        req.body.endereco
       )
     } else{
       _postAluno(req,res);
