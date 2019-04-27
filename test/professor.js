@@ -54,6 +54,18 @@ describe('==== PROFESSOR ====', () => {
       }
     }
 
+    var professorModel4 = {
+      "nome":{
+        "primeiro":"Victor Hugo",
+        "ultimo":"Fernandes de Sousa"
+      },
+      "email":"victorhundo@gmail.com",
+      "login":{
+        "username":"vhugo",
+        "senha":"mudar123",
+        }
+      }
+
   //Before each test we empty the database
   beforeEach((done) => {
       cleanTable('professor');
@@ -139,6 +151,19 @@ describe('==== PROFESSOR ====', () => {
       request
         .post('/professores')
         .send(professorModel1)
+        .expect(201)
+      .then((res) => {
+      return request
+        .get('/professores/' + res.body.insertId)
+        .expect(200)
+      })
+      .then((success) => {done()}, (error) => {done(error)});
+    });
+
+    it('it should POST a professor without endereco', (done) =>{
+      request
+        .post('/professores')
+        .send(professorModel4)
         .expect(201)
       .then((res) => {
       return request
