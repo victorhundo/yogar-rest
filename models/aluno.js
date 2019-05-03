@@ -59,6 +59,17 @@ var _find = function(id){
   return db.mysqlExec(query);
 }
 
+var _findLogin = function(username){
+  if(id) {
+    username = db.escape(username);
+    var query = util.format('SELECT primeiroNome, ultimoNome, rua, \
+                             cidade, estado, cep,email,uuid, username \
+                             FROM `aluno` WHERE `username` = %s;', username);
+  } else
+    var query = util.format('SELECT * FROM `aluno`;');
+  return db.mysqlExec(query);
+}
+
 var _update = function(id, campo, valor) {
   id = db.escape(id);
   campo = db.escapeId(campo);
@@ -71,6 +82,7 @@ var _update = function(id, campo, valor) {
 
 module.exports = {
   find:_find,
+  findLogin:_findLogin,
   insert:_insert,
   delete:_delete,
   update: _update
