@@ -9,33 +9,45 @@ var jwt  = require('jsonwebtoken');
 /*config*/
 var config = require('../config.js');
 
+var _checkFind = (obj, type, pkg) => {
+  if      ( obj == undefined || pkg.senha == undefined) return false;
+  else if ( obj.length != 1 ) return false;
+  else if ( obj[0].senha != pkg.senha) {
+    pkg.msg = {"msg":"Usuário ou senha inválidos."};
+    pkg.code = 401;
+    return false;
+  }
+  else {
+    delete obj[0].senha;
+    var token = _generateToken(obj[0], type);
+    pkg.msg = {"token": token, "type": type, user: obj[0]};
+    pkg.code = 200;
+    return true;
+  }
+}
+
+var _generateToken = (_user, _permissao) => {
+  return jwt.sign(
+    {id: _user.uuid, permissao: _permissao},
+    config.sekretoJWT,
+    {expiresIn: "30d"}
+  );
+}
+
 var _login = (req, res) => {
-  code = undefined;
-  msg = undefined
-  Aluno.find(req.body.uuid)
+  pkg = { code: undefined, msg: undefined, senha: req.body.senha }
+  Aluno.findLogin(req.body.username)
   .then((success) => {
-    if(success.length > 0){
-      var token = jwt.sign({id: req.body.uuid, permissao: ['aluno']}, config.sekretoJWT, {expiresIn: "30d"});
-      msg = {token: token, type: 'aluno', aluno: success};
-      code = 200;
-    } else{
-      return Professor.find(req.body.uuid);
-    }
+    if(!_checkFind(success, 'aluno', pkg))
+      return Professor.findLogin(req.body.username);
   })
   .then((success) => {
-    if(success != undefined && success.length > 0){
-      var token = jwt.sign({id: req.body.uuid, permissao: ['professor']}, config.sekretoJWT, {expiresIn: "30d"});
-      msg = {token: token, type: 'professor', professor: success};
-      code = 200;
-    }
-    else if (!code){
-      msg = {"msg":"Usuário não cadastrado."};
-      code = 401;
+    if(!_checkFind(success, 'professor', pkg) && pkg.code == undefined){
+      pkg.msg = {"msg":"Usuário não cadastrado."};
+      pkg.code = 401;
     }
   })
-  .then((success) => {
-    res.status(code).send(msg)
-  }, (error) => { console.log(error); res.status(500).send("Internal Server Error");})
+  .then((success) => { res.status(pkg.code).send(pkg.msg) }, (error) => { console.log(error); res.status(500).send("Internal Server Error");})
 }
 
 module.exports = {

@@ -60,13 +60,10 @@ var _find = function(id){
 }
 
 var _findLogin = function(username){
-  if(id) {
     username = db.escape(username);
     var query = util.format('SELECT primeiroNome, ultimoNome, rua, \
-                             cidade, estado, cep,email,uuid, username \
+                             cidade, estado, cep,email,uuid, username, senha \
                              FROM `aluno` WHERE `username` = %s;', username);
-  } else
-    var query = util.format('SELECT * FROM `aluno`;');
   return db.mysqlExec(query);
 }
 
