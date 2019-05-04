@@ -1,5 +1,6 @@
 describe('==== ALUNO ====', () => {
 
+  var adminToken = ''
   var alunoModel1 = {
     "nome":{
       "primeiro":"ali",
@@ -70,6 +71,7 @@ describe('==== ALUNO ====', () => {
   //Before each test we empty the database
   beforeEach((done) => {
       cleanTable('aluno');
+      adminToken = generateToken('admin');
       done();
   });
 
@@ -78,22 +80,26 @@ describe('==== ALUNO ====', () => {
       request
         .post('/alunos')
         .send(alunoModel1)
+        .set('x-access-token', adminToken)
         .expect(201)
       .then((res) => {
       return request
         .post('/alunos')
         .send(alunoModel2)
+        .set('x-access-token', adminToken)
         .expect(201)
       })
       .then((res) => {
       return request
         .post('/alunos')
         .send(alunoModel3)
+        .set('x-access-token', adminToken)
         .expect(201)
       })
       .then((res) => {
       return request
         .get('/alunos')
+        .set('x-access-token', adminToken)
         .expect(200)
         .expect((res) => {
           res.body.length.should.equals(3);
@@ -105,6 +111,7 @@ describe('==== ALUNO ====', () => {
     it('it should GET all the alunos', (done) => {
       request
       .get('/alunos')
+      .set('x-access-token', adminToken)
       .expect(200)
       .expect((res) => {
         res.body.length.should.equals(0)
@@ -119,11 +126,54 @@ describe('==== ALUNO ====', () => {
       request
         .post('/alunos')
         .send(alunoModel1)
+        .set('x-access-token', adminToken)
         .expect(201)
       .then((res) => {
       return request
         .get('/alunos/' + res.body.insertId)
+        .set('x-access-token', adminToken)
         .expect(200)
+      })
+      .then((success) => {done()}, (error) => {done(error)});
+    });
+
+    it('it should GET a aluno given id - ALUNO AUTENTICADO', (done) => {
+      request
+        .post('/alunos')
+        .send(alunoModel1)
+        .expect(201)
+      .then((res) => {
+      return request
+        .post('/auth/login')
+        .send({username: alunoModel1.login.username, senha: alunoModel1.login.senha})
+        .expect(200)
+      })
+      .then((res) => {
+        return request
+        .get('/alunos/' + res.body.user.uuid)
+        .set('x-access-token', res.body.token)
+        .expect(200)
+      })
+      .then((success) => {done()}, (error) => {done(error)});
+    });
+
+    it('it should NOT GET a aluno given id - ALUNO NÃO AUTENTICADO', (done) => {
+      var userId = '';
+      request
+        .post('/alunos')
+        .send(alunoModel1)
+        .expect(201)
+      .then((res) => {
+      userId = res.body.insertId
+      return request
+        .post('/auth/login')
+        .send({username: alunoModel1.login.username, senha: alunoModel1.login.senha + 'aasd'})
+        .expect(401)
+      })
+      .then((res) => {
+        return request
+        .get('/alunos/' + userId)
+        .expect(403)
       })
       .then((success) => {done()}, (error) => {done(error)});
     });
@@ -132,11 +182,13 @@ describe('==== ALUNO ====', () => {
       request
         .post('/alunos')
         .send(alunoModel1)
+        .set('x-access-token', adminToken)
         .expect(201)
       .then((res) => {
       return request
         .get('/alunos/' + res.body.insertId + 1)
         .expect(200)
+        .set('x-access-token', adminToken)
         .expect((res) => {
           res.body.length.should.equals(0);
           res.body.should.be.a('array');
@@ -152,10 +204,12 @@ describe('==== ALUNO ====', () => {
       request
         .post('/alunos')
         .send(alunoModel1)
+        .set('x-access-token', adminToken)
         .expect(201)
       .then((res) => {
       return request
         .get('/alunos/' + res.body.insertId)
+        .set('x-access-token', adminToken)
         .expect(200)
       })
       .then((success) => {done()}, (error) => {done(error)});
@@ -165,10 +219,12 @@ describe('==== ALUNO ====', () => {
       request
         .post('/alunos')
         .send(alunoModel4)
+        .set('x-access-token', adminToken)
         .expect(201)
       .then((res) => {
       return request
         .get('/alunos/' + res.body.insertId)
+        .set('x-access-token', adminToken)
         .expect(200)
       })
       .then((success) => {done()}, (error) => {done(error)});
@@ -181,10 +237,12 @@ describe('==== ALUNO ====', () => {
         request
           .post('/alunos')
           .send(alunoModel1)
+          .set('x-access-token', adminToken)
           .expect(201)
         .then((res) => {
         return request
           .delete('/alunos/' + res.body.insertId )
+          .set('x-access-token', adminToken)
           .expect(200)
           .expect((res) => {
             res.clientError.should.be.equal(false);
@@ -202,12 +260,14 @@ describe('==== ALUNO ====', () => {
       request
         .post('/alunos')
         .send(alunoModel1)
+        .set('x-access-token', adminToken)
         .expect(201)
       .then((res) => {
       alunoId = res.body.insertId
       return request
         .put('/alunos/' + alunoId)
         .send({campo: 'primeiroNome', valor: 'victor'})
+        .set('x-access-token', adminToken)
         .expect(200)
         .expect((res) => {
           res.clientError.should.be.equal(false);
@@ -218,6 +278,7 @@ describe('==== ALUNO ====', () => {
       .then((res) => {
       return request
         .get('/alunos/' + alunoId)
+        .set('x-access-token', adminToken)
         .expect(200)
       })
       .then((success) => {done()}, (error) => {done(error)});
