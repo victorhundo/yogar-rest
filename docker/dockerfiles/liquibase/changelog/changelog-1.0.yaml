@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Victor Hugo
+      comment: "Criando usuário admin"
+      changes:
+        - insert:
+            tableName: admin
+            columns:
+              - column:
+                  name: uuid
+                  value: "00000000-0000-0000-0000-000000000000"
+              - column:
+                  name: username
+                  value: "admin"
+              - column:
+                  name: senha
+                  value: "admin"

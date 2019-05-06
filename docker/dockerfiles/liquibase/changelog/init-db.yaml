@@ -75,3 +75,43 @@ databaseChangeLog:
               - column:
                   name: senha
                   type: varchar(255)
+        - createTable:
+            tableName: admin
+            columns:
+              - column:
+                  name: uuid
+                  type: varchar(255)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(50)
+              - column:
+                  name: senha
+                  type: varchar(255)
+        - createTable:
+            tableName: post
+            columns:
+              - column:
+                  name: id
+                  type: int(11)
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: uuidProfessor
+                  type: varchar(255)
+                  references: professor(uuid)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: data
+                  type: date
+              - column:
+                  name: titulo
+                  type: varchar(50)
+              - column:
+                  name: texto
+                  type: varchar(50)
