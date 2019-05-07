@@ -31,12 +31,10 @@ services:
 
   mysql:
     build: ../dockerfiles/mysql
-    image: yogar-mysql
+    image: yogar-mysql-test
     container_name: yogar-db-dev
     command: mysqld --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=y0g4rp4ss
       - MYSQL_DATABASE=yogar
-    ports:
-      - "3306:3306"

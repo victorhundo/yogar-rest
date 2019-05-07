@@ -29,29 +29,30 @@ describe('==== POSTS ====', () => {
 
   describe('GET /posts', () => {
     it('it should GET all the posts',(done) => {
+      var professorId;
       request
         .post('/professores')
         .send(professorModel)
         .set('x-access-token', adminToken)
         .expect(201)
       .then((res) => {
-      postModel.uuidProfessor = res.body.insertId;
+      professorId = res.body.insertId;
       return request
-        .post('/posts')
+        .post('/professores/' + professorId + '/posts')
         .send(postModel)
         .set('x-access-token', adminToken)
         .expect(201)
       })
       .then((res) => {
       return request
-        .post('/posts')
+        .post('/professores/' + professorId + '/posts')
         .send(postModel)
         .set('x-access-token', adminToken)
         .expect(201)
       })
       .then((res) => {
       return request
-        .get('/posts')
+        .get('/professores/' + professorId + '/posts')
         .set('x-access-token', adminToken)
         .expect(200)
         .expect((res) => {
@@ -60,27 +61,6 @@ describe('==== POSTS ====', () => {
       })
       .then((success) => {done()}, (error) => {done(error)});
     });
-
-    it('it should GET all the posts', (done) => {
-      request
-      .get('/posts')
-      .set('x-access-token', adminToken)
-      .expect(200)
-      .expect((res) => {
-        res.body.length.should.equals(0);
-      })
-      .then((success) => {done()}, (error) => {done(error)});
-    });
-
-
-    it('it should NOT GET the posts', (done) => {
-      request
-      .post('/posts')
-      .send(postModel)
-      .set('x-access-token', adminToken)
-      .expect(400)
-      .then((success) => {done()}, (error) => {done(error)});
-    });
-
   });
+
 });

@@ -20,7 +20,7 @@ var _getProfessores = (req, res) => {
   GET /professor/:id
 */
 var _getProfessor = (req, res) => {
-  Professor.find(req.params.id)
+  Professor.find(req.params.idProfessor)
   .then((sucess) => {
       var professor = sucess;
       res.status(200).send(professor);
@@ -53,9 +53,9 @@ var _postProfessor = (req, res) => {
   DELETE /professor
 */
 var _deleteProfessor = (req, res) => {
-  Professor.delete(req.params.id)
+  Professor.delete(req.params.idProfessor)
   .then((sucess) => {
-    return Professor.find(req.params.id)
+    return Professor.find(req.params.idProfessor)
   })
   .then((sucess) => {
     if(sucess.length <= 0)

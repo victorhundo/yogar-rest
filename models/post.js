@@ -20,12 +20,13 @@ var _delete = function(id){
   return db.mysqlExec(query);
 }
 
-var _find = function(id){
+var _find = function(idProfessor, id){
+  db.escapeArgs(arguments);
   if(id) {
     id = db.escape(id);
     var query = util.format('SELECT * FROM `post` WHERE `id` = %s;', id);
   } else
-    var query = util.format('SELECT * FROM `post`;');
+    var query = util.format('SELECT * FROM `post` WHERE `uuidProfessor` = %s;', idProfessor);
   return db.mysqlExec(query);
 }
 

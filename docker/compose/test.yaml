@@ -34,7 +34,7 @@ services:
 
   mysql-test:
     build: ../dockerfiles/mysql
-    image: yogar-mysql-test
+    image: yogar-mysql
     container_name: yogar-db-test
     command: mysqld --default-authentication-plugin=mysql_native_password
     restart: always

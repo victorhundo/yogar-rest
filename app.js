@@ -34,14 +34,12 @@ app.get('/', function (req, res) {
 //Routes
 aluno = require('./services/aluno');
 professor = require('./services/professor');
-post = require('./services/post');
 auth = require('./services/auth');
 
 
 // Mouting applications.
 app.use('/alunos', aluno);
 app.use('/professores', professor);
-app.use('/posts', post);
 app.use('/auth', auth);
 
 module.exports = {

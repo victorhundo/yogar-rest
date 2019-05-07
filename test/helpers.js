@@ -32,6 +32,6 @@ global.generateToken = (type) => {
       {id: 'aluno-uuid', permissao: ['aluno']},
       config.sekretoJWT,
       {expiresIn: "30d"}
-    );
+    ); 
   }
 }
