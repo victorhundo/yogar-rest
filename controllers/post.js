@@ -51,7 +51,8 @@ var _insertPost = (req, res) => {
         req.body.titulo,
         req.body.texto,
         req.params.idProfessor,
-        datetime
+        datetime,
+        req.body.img,
       )
     .then(
     (success) => { res.status(201).send({"insertId":success});},

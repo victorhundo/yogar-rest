@@ -1,15 +1,15 @@
 var util = require('util');
 var db = require('../modules/db');
 
-var _insert = function(titulo, texto, uuidProfessor, datetime){
+var _insert = function(titulo, texto, uuidProfessor, datetime, img){
   argsEscaped = db.escapeArgs(arguments);
   var query = util.format(
     'INSERT INTO post (\
       titulo, texto,\
-      uuidProfessor,data) \
-    VALUES (%s, %s, %s, %s);',
+      uuidProfessor,data,img) \
+    VALUES (%s, %s, %s, %s, %s);',
     titulo, texto,
-    uuidProfessor, datetime);
+    uuidProfessor, datetime, img);
   return db.mysqlExec(query);
 }
 

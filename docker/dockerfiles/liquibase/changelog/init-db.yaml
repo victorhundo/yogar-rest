@@ -115,3 +115,6 @@ databaseChangeLog:
               - column:
                   name: texto
                   type: varchar(50)
+              - column:
+                  name: img
+                  type: varchar(255)

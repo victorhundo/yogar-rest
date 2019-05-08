@@ -4,13 +4,15 @@ describe('==== POSTS ====', () => {
   var postModel = {
     "titulo": "titulo",
     "texto": "texto",
-    "uuidProfessor": undefined
+    "uuidProfessor": undefined,
+    "img": "http://yogalab.pt/wp-content/uploads/2018/11/melhor-estudio-de-Yoga-Lisboa.jpg"
   }
 
   var postModel2 = {
     "titulo": "titulo2",
     "texto": "texto2",
-    "uuidProfessor": undefined
+    "uuidProfessor": undefined,
+    "img": "http://yogalab.pt/wp-content/uploads/2018/11/melhor-estudio-de-Yoga-Lisboa.jpg"
   }
 
   var professorModel = {
