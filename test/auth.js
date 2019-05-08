@@ -68,6 +68,18 @@ describe('==== AUTH ====', () => {
       .then((success) => {done()}, (error) => {done(error)});
     });
 
+    it('it should LOGIN a admin', (done) => {
+      request
+        .post('/auth/login')
+        .send({username: "admin", senha: "admin"})
+        .expect(200)
+      .then((res) => {
+        res.body.should.have.property('type');
+        res.body.type.should.equal('admin');
+      })
+      .then((success) => {done()}, (error) => {done(error)});
+    });
+
     it('it should NOT LOGIN a professor', (done) => {
       request
         .post('/professores')

@@ -1,6 +1,7 @@
 var util = require('util');
 var Aluno = require('../models/aluno');
 var Professor = require('../models/professor');
+var Admin = require('../models/admin');
 var db = require('../modules/db');
 var query = require('../modules/query');
 var uuidv1 = require('uuid/v1');
@@ -42,7 +43,11 @@ var _login = (req, res) => {
       return Professor.findLogin(req.body.username);
   })
   .then((success) => {
-    if(!_checkFind(success, 'professor', pkg) && pkg.code == undefined){
+    if(!_checkFind(success, 'professor', pkg))
+      return Admin.findLogin(req.body.username);
+  })
+  .then((success) => {
+    if(!_checkFind(success, 'admin', pkg) && pkg.code == undefined){
       pkg.msg = {"msg":"Usuário não cadastrado."};
       pkg.code = 401;
     }
