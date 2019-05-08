@@ -24,6 +24,8 @@ services:
     environment:
       - DB_PASSWORD=y0g4rp4ss
       - DB_HOST=mysql-server
+    volumes:
+      - ../dockerfiles/liquibase/changelog:/changelog
     links:
       - mysql:mysql-server
     depends_on:

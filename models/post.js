@@ -25,8 +25,11 @@ var _find = function(idProfessor, id){
   if(id) {
     id = db.escape(id);
     var query = util.format('SELECT * FROM `post` WHERE `id` = %s;', id);
-  } else
+  } else if (idProfessor){
     var query = util.format('SELECT * FROM `post` WHERE `uuidProfessor` = %s;', idProfessor);
+  } else{
+    var query = util.format('SELECT * FROM `post`');
+  }
   return db.mysqlExec(query);
 }
 

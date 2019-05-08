@@ -4,8 +4,22 @@ var db = require('../modules/db');
 var query = require('../modules/query');
 var uuidv1 = require('uuid/v1');
 
+
 /*
   GET /posts
+*/
+var _getAllPosts = (req, res) => {
+  Post.find()
+  .then((sucess) => {
+    var posts = sucess;
+    posts = posts.filter(query.search(req.query));
+    res.status(200).send(posts);
+  });
+}
+
+
+/*
+  GET /professores/:idProfessor/posts
 */
 var _getPosts = (req, res) => {
   Post.find(req.params.idProfessor)
@@ -16,8 +30,9 @@ var _getPosts = (req, res) => {
   });
 }
 
+
 /*
-  GET /posts/:id
+  GET /professores/:idProfessor/posts/:id
 */
 var _getPost = (req, res) => {
   Aluno.find(req.params.idProfessor, req.params.id)
@@ -45,7 +60,7 @@ var _insertPost = (req, res) => {
 }
 
 /*
-  DELETE /post
+  DELETE /professores/:idProfessor/post
 */
 var _deletePost = (req, res) => {
   Post.delete(req.params.id)
@@ -61,7 +76,7 @@ var _deletePost = (req, res) => {
 }
 
 /*
-  UPDATE /posts
+  UPDATE /professores/:idProfessor/posts/:id
 */
 var _updatePost = (req, res) => {
   if (req.body.campo == 'id')
@@ -78,6 +93,7 @@ var _updatePost = (req, res) => {
 
 module.exports = {
   getPosts: _getPosts,
+  getAllPosts:_getAllPosts,
   getPost: _getPost,
   insertPost: _insertPost,
   deletePost:_deletePost,

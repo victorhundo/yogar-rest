@@ -37,6 +37,10 @@ professor = require('./services/professor');
 auth = require('./services/auth');
 
 
+var Post = require('./controllers/post');
+app.route('/posts').get(Post.getAllPosts)
+
+
 // Mouting applications.
 app.use('/alunos', aluno);
 app.use('/professores', professor);
