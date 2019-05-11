@@ -39,6 +39,9 @@ databaseChangeLog:
               - column:
                   name: senha
                   type: varchar(255)
+              - column:
+                  name: xp
+                  type: int
         - createTable:
             tableName: professor
             columns:

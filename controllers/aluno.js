@@ -27,6 +27,9 @@ var _getAluno = (req, res) => {
   });
 }
 
+/*
+  POST /aluno
+*/
 var _postAluno = (req, res) => {
   var uuid = uuidv1(); // Generate UUID
   Aluno.find(uuid)
@@ -81,10 +84,31 @@ var _updateAluno = (req, res) => {
   });
 }
 
+/*
+  POST /aluno/:id/xp
+*/
+var _postAlunoXp = (req, res) => {
+  var response = { code: undefined, msg: undefined };
+  Aluno.find(req.params.id)
+  .then((success) => {
+    if(success.length == 1){
+      var aluno = success[0];
+      if ( typeof(req.body.valor) == 'number'){
+        req.body.campo = "xp";
+        req.body.valor += success[0].xp;
+        _updateAluno(req, res);
+      }
+    } else{
+      res.status(404).send({message: "Aluno not found."});
+    }
+  })
+}
+
 module.exports = {
   getAlunos: _getAlunos,
   getAluno: _getAluno,
   postAluno: _postAluno,
   deleteAluno:_deleteAluno,
-  updateAluno: _updateAluno
+  updateAluno: _updateAluno,
+  postAlunoXp: _postAlunoXp
 }

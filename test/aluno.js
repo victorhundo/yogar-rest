@@ -285,4 +285,59 @@ describe('==== ALUNO ====', () => {
     });
   });
 
+  describe('POST /alunos/:id/xp', () => {
+    it('it should UPDATE a xp aluno value', (done) => {
+      var alunoId;
+      request
+        .post('/alunos')
+        .send(alunoModel1)
+        .expect(201)
+      .then((res) => {
+      alunoId = res.body.insertId
+      return request
+        .post('/alunos/' + alunoId + '/xp')
+        .send({valor: 100})
+        .set('x-access-token', adminToken)
+        .expect(200)
+        .expect((res) => {
+          res.clientError.should.be.equal(false);
+          res.serverError.should.be.equal(false);
+          res.body.message.should.be.equal("Atualização feita com sucesso");
+        })
+      })
+      .then((res) => {
+      return request
+        .get('/alunos/' + alunoId)
+        .set('x-access-token', adminToken)
+        .expect(200)
+        .expect((res) => {
+          res.body[0].xp.should.be.equal(100);
+        })
+      })
+      .then((res) => {
+        return request
+          .post('/alunos/' + alunoId + '/xp')
+          .send({valor: 100})
+          .set('x-access-token', adminToken)
+          .expect(200)
+          .expect((res) => {
+            res.clientError.should.be.equal(false);
+            res.serverError.should.be.equal(false);
+            res.body.message.should.be.equal("Atualização feita com sucesso");
+          })
+      })
+      .then((res) => {
+      return request
+        .get('/alunos/' + alunoId)
+        .set('x-access-token', adminToken)
+        .expect(200)
+        .expect((res) => {
+          res.body[0].xp.should.be.equal(200);
+        })
+      })
+      .then((success) => {done()}, (error) => {done(error)});
+    });
+
+  });
+
 });

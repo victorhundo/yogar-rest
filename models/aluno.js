@@ -52,7 +52,7 @@ var _find = function(id){
   if(id) {
     id = db.escape(id);
     var query = util.format('SELECT primeiroNome, ultimoNome, rua, \
-                             cidade, estado, cep,email,uuid, username \
+                             cidade, estado, cep,email,uuid, username, xp \
                              FROM `aluno` WHERE `uuid` = %s;', id);
   } else
     var query = util.format('SELECT * FROM `aluno`;');
@@ -62,7 +62,7 @@ var _find = function(id){
 var _findLogin = function(username){
     username = db.escape(username);
     var query = util.format('SELECT primeiroNome, ultimoNome, rua, \
-                             cidade, estado, cep,email,uuid, username, senha \
+                             cidade, estado, cep,email,uuid, username, senha, xp \
                              FROM `aluno` WHERE `username` = %s;', username);
   return db.mysqlExec(query);
 }

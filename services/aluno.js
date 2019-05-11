@@ -19,4 +19,7 @@ app.route('/:id')
     .delete(routerAuthID, aluno.deleteAluno)
     .put(routerAuthID, aluno.updateAluno);
 
+app.route('/:id/xp')
+    .post(routerAuthID, aluno.postAlunoXp);
+
 module.exports = app;
