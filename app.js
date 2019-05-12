@@ -9,10 +9,15 @@ var multer = require('multer');
 var morgan = require('morgan');
 require('shelljs/global');
 
+const YAML = require('yamljs');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = YAML.load('./swagger.yaml');
+ 
 app.use(bodyParser.json({limit: '25mb'}));
 app.use(bodyParser.urlencoded({limit: '25mb', extended: true}));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: 'application/json'}));
+app.use('/v2', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(cors({origin: '*'}));
 

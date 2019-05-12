@@ -1,0 +1,516 @@
+openapi: 3.0.1
+info:
+  title: Swagger Yogar
+  description: Documentação da API do Yogar!
+  version: 1.0.0
+servers:
+- url: http://api.yogar.splab.ufcg.edu.br/
+- url: http://localhost:3000/
+tags:
+- name: alunos
+- name: professores
+- name: posts
+- name: auth
+paths:
+  /alunos:
+    post:
+      requestBody:
+        required: true
+        content:
+           application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: object
+                  properties:
+                    primeiro:
+                      type: string
+                    segundo:
+                      type: string
+                email:
+                  type: string
+                login:
+                  type: object
+                  properties:
+                    username:
+                      type: string
+                    senha:
+                      type: string
+      tags:
+      - alunos
+      summary: Adiciona um aluno
+      responses:
+        201:
+          description: Accept
+          content:
+            application:
+              schema:
+                type: object
+                properties:
+                  insertId:
+                    type: string
+        403:
+          description: Forbidden
+        500:
+          description: Internal Server Error
+
+      security:
+      - petstore_auth:
+        - write:pets
+        - read:pets
+    get:
+      summary: Lista todos os alunos
+      tags:
+      - alunos
+      responses:
+        200:
+          description: Ok
+          content:
+            application:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    nome:
+                      type: object
+                      properties:
+                        primeiroNome:
+                          type: string
+                        ultimoNome:
+                          type: string
+                        rua:
+                          type: string
+                        cidade:
+                          type: string
+                        estado:
+                          type: string
+                        cep:
+                          type: string
+                        email:
+                          type: string
+                        uuid:
+                          type: string
+                        username:
+                          type: string
+                        xp:
+                          type: integer
+        403:
+          description: Forbidden
+        500:
+          description: Internal Server Error
+
+  /aluno/{id}:
+    get:
+      tags:
+      - alunos
+      summary: Encontre aluno por id
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Ok
+          content:
+            application:
+              schema:
+                type: object
+                properties:
+                  nome:
+                    type: object
+                    properties:
+                      primeiroNome:
+                        type: string
+                      ultimoNome:
+                        type: string
+                      rua:
+                        type: string
+                      cidade:
+                        type: string
+                      estado:
+                        type: string
+                      cep:
+                        type: string
+                      email:
+                        type: string
+                      uuid:
+                        type: string
+                      username:
+                        type: string
+                      xp:
+                        type: integer
+        403:
+          description: Forbidden
+        500:
+          description: Internal Server Error
+    delete:
+      tags:
+      - alunos
+      summary: Remove aluno por id
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        201:
+          description: Ok
+    put:
+      tags:
+      - alunos
+      summary: Atualiza aluno por id
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+           application/json:
+            schema:
+              type: object
+              properties:
+                campo:
+                  type: string
+                valor:
+                  type: string
+      responses:
+        200:
+          description: Ok
+
+  /aluno/{id}/xp:
+    post:
+      tags:
+      - alunos
+      summary: Aumenta o valor de experiencia do aluno
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+           application/json:
+            schema:
+              type: object
+              properties:
+                valor:
+                  type: integer
+      responses:
+        200:
+          description: Ok
+
+
+  /professores:
+    post:
+      requestBody:
+        required: true
+        content:
+           application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: object
+                  properties:
+                    primeiro:
+                      type: string
+                    segundo:
+                      type: string
+                email:
+                  type: string
+                login:
+                  type: object
+                  properties:
+                    username:
+                      type: string
+                    senha:
+                      type: string
+      tags:
+      - professores
+      summary: Adiciona um professor
+      responses:
+        201:
+          description: Accept
+          content:
+            application:
+              schema:
+                type: object
+                properties:
+                  insertId:
+                    type: string
+        403:
+          description: Forbidden
+        500:
+          description: Internal Server Error
+
+    get:
+      summary: Lista todos os professores
+      tags:
+      - professores
+      responses:
+        200:
+          description: Ok
+          content:
+            application:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    nome:
+                      type: object
+                      properties:
+                        primeiroNome:
+                          type: string
+                        ultimoNome:
+                          type: string
+                        rua:
+                          type: string
+                        cidade:
+                          type: string
+                        estado:
+                          type: string
+                        cep:
+                          type: string
+                        email:
+                          type: string
+                        uuid:
+                          type: string
+                        username:
+                          type: string
+        403:
+          description: Forbidden
+        500:
+          description: Internal Server Error
+
+  /professores/{id}:
+    get:
+      tags:
+      - professores
+      summary: Encontre aluno por id
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Ok
+          content:
+            application:
+              schema:
+                type: object
+                properties:
+                  nome:
+                    type: object
+                    properties:
+                      primeiroNome:
+                        type: string
+                      ultimoNome:
+                        type: string
+                      rua:
+                        type: string
+                      cidade:
+                        type: string
+                      estado:
+                        type: string
+                      cep:
+                        type: string
+                      email:
+                        type: string
+                      uuid:
+                        type: string
+                      username:
+                        type: string
+        403:
+          description: Forbidden
+        500:
+          description: Internal Server Error
+    delete:
+      tags:
+      - professores
+      summary: Remove professor por id
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        201:
+          description: Ok
+    put:
+      tags:
+      - professores
+      summary: Atualiza professor por id
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+           application/json:
+            schema:
+              type: object
+              properties:
+                campo:
+                  type: string
+                valor:
+                  type: string
+      responses:
+        200:
+          description: Ok
+
+  /posts:
+    get:
+      tags:
+        - posts
+      summary: Atualiza post do professor {id}
+      responses:
+        200:
+          description: Ok
+
+  /professores/{id}/posts:
+    post:
+      tags:
+      - posts
+      summary: Cria post do professor {id}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+           application/json:
+            schema:
+              type: object
+              properties:
+                titulo:
+                  type: string
+                texto:
+                  type: string
+                img:
+                  type: string
+      responses:
+        201:
+          description: Created
+    get:
+      tags:
+      - posts
+      summary: Encontre post do professor id
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Ok
+          content:
+            application:
+              schema:
+                type: object
+                properties:
+                  nome:
+                    type: object
+                    properties:
+                      titulo:
+                        type: string
+                      texto:
+                        type: string
+                      uuidProfessor:
+                        type: string
+                      data:
+                        type: string
+                      img:
+                        type: string
+        403:
+          description: Forbidden
+        500:
+          description: Internal Server Error
+    delete:
+      tags:
+      - posts
+      summary: Remove post do professor {id}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        201:
+          description: Ok
+    put:
+      tags:
+      - posts
+      summary: Atualiza post do professor {id}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+           application/json:
+            schema:
+              type: object
+              properties:
+                campo:
+                  type: string
+                valor:
+                  type: string
+      responses:
+        200:
+          description: Ok
+
+  /auth/login:
+    post:
+      tags:
+        - auth
+      summary: Loga no sistema
+      requestBody:
+        required: true
+        content:
+           application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                senha:
+                  type: string
+      responses:
+        201:
+          description: Ok
+          content:
+            application:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                  type:
+                    type: string
+                  user:
+                    type: object
