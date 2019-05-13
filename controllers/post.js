@@ -46,6 +46,8 @@ var _insertPost = (req, res) => {
   if (req.params.idProfessor == undefined ) {
     return res.status(400).send({"msg":"Bad Request"});
   }
+
+  if (req.body.img == undefined) req.body.img = "https://lifenlesson.com/wp-content/uploads/2017/02/Bakasana-1-1024x682.jpg";
   var datetime = new Date();
   Post.insert(
         req.body.titulo,
