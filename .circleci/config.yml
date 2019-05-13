@@ -1,15 +1,93 @@
-# Use the latest 2.1 version of CircleCI pipeline processing engine, see https://circleci.com/docs/2.0/configuration-reference/
-version: 2.1
+version: 2
+jobs:
+  build:
+    machine:
+      docker_layer_caching: true
+    steps:
+      - checkout
+      - run:
+          name: Build Docker Images
+          command: |
+            set -x
+            docker-compose -f docker/compose/circle.yaml build
+      - run:
+          name: Save Docker image layer cache
+          command: |
+            set -x
+            docker save -o ~/.cache/yogar-api-circle.tar yogar-api-circle
+            docker save -o ~/.cache/yogar-mysql-circle.tar yogar-mysql-circle
+            docker save -o ~/.cache/yogar-liquibase-circle.tar yogar-liquibase-circle
+      - save_cache:
+          key: uea-{{ .Branch }}-{{ epoch }}
+          paths:
+            - ~/.cache/yogar-api-circle.tar
+            - ~/.cache/yogar-mysql-circle.tar
+            - ~/.cache/yogar-liquibase-circle.tar
 
-# Use a package of configuration called an orb, see https://circleci.com/docs/2.0/orb-intro/
-orbs:
-  # Declare a dependency on the welcome-orb
-  welcome: circleci/welcome-orb@0.3.1
+  test_1:
+    machine:
+      docker_layer_caching: true
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - uea-{{ .Branch }}
+          paths:
+            - ~/.cache/yogar-api-circle.tar
+            - ~/.cache/yogar-mysql-circle.tar
+            - ~/.cache/yogar-liquibase-circle.tar
+      - run:
+          name: Load Docker image layer cache
+          command: |
+            set -x
+            docker load -i  ~/.cache/yogar-api-circle.tar
+            docker load -i ~/.cache/yogar-mysql-circle.tar
+            docker load -i ~/.cache/yogar-liquibase-circle.tar
+      - run:
+          name: Start containers
+          command: |
+            set -x
+            docker-compose -f docker/compose/circle.yaml up -d
+      - run:
+          name: Wait container is ready
+          command: |
+            set -x
+            sleep 20
+      - run:
+          name: NPM Install
+          command: |
+            set -x
+            docker exec -it yogar-api-dev bash -c "git pull"
+            docker exec -it yogar-api-dev bash -c "git checkout ${CIRCLE_BRANCH} && git pull"
+            docker exec -it yogar-api-dev bash -c "npm install --unsafe-perm --only=dev"
+      - run:
+          name: Verify it's working
+          command: |
+            set -x
+            docker exec -it yogar-api-dev bash -c "npm run test-unit"
 
-# Orchestrate or schedule a set of jobs, see https://circleci.com/docs/2.0/workflows/
+  deploy:
+    machine: true
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "c5:0d:a4:e3:b8:96:4a:42:68:ed:72:60:33:b5:84:2d"
+      - run:
+          name: Deployment
+          command: |
+            ssh -oStrictHostKeyChecking=no splab@csi.splab.ufcg.edu.br /opt/yogar/yogar-rest/run.sh
+
 workflows:
-  # Name the workflow "Welcome"
-  Welcome:
-    # Run the welcome/run job in its own container
+  version: 2
+  build-and-deploy:
     jobs:
-      - welcome/run
+      - build
+      - test_1:
+          requires:
+            - build
+      - deploy:
+          requires:
+            - test_1
+          filters:
+            branches:
+              only: master

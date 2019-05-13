@@ -1,0 +1,38 @@
+version: '3'
+services:
+  api:
+    build: ../dockerfiles/node-circle/
+    image: yogar-api-circle
+    container_name: yogar-api-dev
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=mysql-server
+      - DB_PASSWORD=y0g4rp4ss
+      - LIQUIBASE=yogar-liquibase
+    links:
+      - mysql:mysql-server
+    depends_on:
+      - mysql
+
+  liquibase:
+    build: ../dockerfiles/liquibase
+    image: yogar-liquibase-circle
+    container_name: yogar-liquibase
+    environment:
+      - DB_PASSWORD=y0g4rp4ss
+      - DB_HOST=mysql-server
+    links:
+      - mysql:mysql-server
+    depends_on:
+      - mysql
+
+  mysql:
+    build: ../dockerfiles/mysql
+    image: yogar-mysql-circle
+    container_name: yogar-db-dev
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=y0g4rp4ss
+      - MYSQL_DATABASE=yogar
