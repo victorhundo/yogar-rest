@@ -75,7 +75,7 @@ jobs:
       - run:
           name: Deployment
           command: |
-            ssh -oStrictHostKeyChecking=no splab@csi.splab.ufcg.edu.br /opt/yogar/yogar-rest/run.sh
+            ssh -oStrictHostKeyChecking=no vhugo@csi.splab.ufcg.edu.br /opt/yogar/yogar-rest/run.sh
 
 workflows:
   version: 2
