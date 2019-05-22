@@ -65,14 +65,18 @@ describe('==== POSTS ====', () => {
       professorId2 = res.body.insertId;
       return request
         .post('/professores/' + professorId + '/posts')
-        .send(postModel)
+        .attach("theFile", 'test/files/post.jpg')
+        .field('titulo', 'titulo2')
+        .field('texto', 'texto2')
         .set('x-access-token', adminToken)
         .expect(201)
       })
       .then((res) => {
       return request
         .post('/professores/' + professorId2 + '/posts')
-        .send(postModel2)
+        .attach("theFile", 'test/files/post.jpg')
+        .field('titulo', 'titulo2')
+        .field('texto', 'texto2')
         .set('x-access-token', adminToken)
         .expect(201)
       })
@@ -99,14 +103,18 @@ describe('==== POSTS ====', () => {
       professorId = res.body.insertId;
       return request
         .post('/professores/' + professorId + '/posts')
-        .send(postModel)
+        .attach("theFile", 'test/files/post.jpg')
+        .field('titulo', 'titulo2')
+        .field('texto', 'texto2')
         .set('x-access-token', adminToken)
         .expect(201)
       })
       .then((res) => {
       return request
         .post('/professores/' + professorId + '/posts')
-        .send(postModel)
+        .attach("theFile", 'test/files/post.jpg')
+        .field('titulo', 'titulo2')
+        .field('texto', 'texto2')
         .set('x-access-token', adminToken)
         .expect(201)
       })

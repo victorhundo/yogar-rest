@@ -3,6 +3,7 @@ var Professor = require('../models/professor');
 var db = require('../modules/db');
 var query = require('../modules/query');
 var uuidv1 = require('uuid/v1');
+var mkdirp = require('mkdirp');
 
 /*
   GET /professor
@@ -42,9 +43,16 @@ var _postProfessor = (req, res) => {
     } else{
       _postProfessor(req,res);
     }
+  }) 
+  .then((success) => {
+    return mkdirp('/data/user/professor/' + uuid, (err) => {
+      if (err) console.error(err)
+    });
   })
   .then(
-    (success) => { res.status(201).send({"insertId":uuid});},
+    (success) => {
+      res.status(201).send({"insertId":uuid});
+    },
     (error) => { res.status(500).send("Internal Server Error");}
   );
 }

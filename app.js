@@ -8,16 +8,20 @@ var bodyParser  = require('body-parser');
 var multer = require('multer');
 var morgan = require('morgan');
 require('shelljs/global');
+const exphbs = require('express-handlebars')
 
 const YAML = require('yamljs');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = YAML.load('./swagger.yaml');
- 
-app.use(bodyParser.json({limit: '25mb'}));
-app.use(bodyParser.urlencoded({limit: '25mb', extended: true}));
-app.use(bodyParser.text());
-app.use(bodyParser.json({ type: 'application/json'}));
+
+app.use(bodyParser.json()).use(bodyParser.urlencoded({ extended: true }))
+// app.use(bodyParser.text());
+// app.use(bodyParser.json({ type: 'application/json'}));
 app.use('/v2', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.set('view engine', 'handlebars')
+
+// for parsing multipart/form-data
+const upload = require('./modules/file')
 
 app.use(cors({origin: '*'}));
 
@@ -41,9 +45,15 @@ aluno = require('./services/aluno');
 professor = require('./services/professor');
 auth = require('./services/auth');
 
-
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 var Post = require('./controllers/post');
 app.route('/posts').get(Post.getAllPosts)
+
+app.post('/mypost', upload.single('theFile'), Post.teste)
+
+app.get('/teste', (req, res) => {
+  res.render('index')
+})
 
 
 // Mouting applications.

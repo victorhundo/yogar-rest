@@ -1,7 +1,8 @@
 //Libraries
 const express = require('express');
 var auth = require('../modules/authControl');
-
+// for parsing multipart/form-data
+const upload = require('../modules/file')
 
 //controllers
 var post = require('../controllers/post');
@@ -13,7 +14,8 @@ routerAuthID.use(auth.authorizeUser);
 // Aluno routes
 router.route('/')
     .get(post.getPosts)
-    .post(post.insertPost);
+    .post(upload.single('theFile'), post.teste); 
+
 router.route('/:id')
     .get(routerAuthID, post.getPost)
     .delete(routerAuthID, post.deletePost)

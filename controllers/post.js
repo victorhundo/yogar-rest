@@ -1,6 +1,7 @@
 var util = require('util');
 var Post = require('../models/post');
 var db = require('../modules/db');
+var file = require('../modules/file');
 var query = require('../modules/query');
 var uuidv1 = require('uuid/v1');
 
@@ -42,26 +43,6 @@ var _getPost = (req, res) => {
   });
 }
 
-var _insertPost = (req, res) => {
-  if (req.params.idProfessor == undefined ) {
-    return res.status(400).send({"msg":"Bad Request"});
-  }
-
-  if (req.body.img == undefined) req.body.img = "https://lifenlesson.com/wp-content/uploads/2017/02/Bakasana-1-1024x682.jpg";
-  var datetime = new Date();
-  Post.insert(
-        req.body.titulo,
-        req.body.texto,
-        req.params.idProfessor,
-        datetime,
-        req.body.img,
-      )
-    .then(
-    (success) => { res.status(201).send({"insertId":success});},
-    (error) => { res.status(500).send("Internal Server Error");}
-  );
-}
-
 /*
   DELETE /professores/:idProfessor/post
 */
@@ -94,11 +75,33 @@ var _updatePost = (req, res) => {
   });
 }
 
+var _teste = (req,res) => {
+  if (req.params.idProfessor == undefined ) {
+    return res.status(400).send({"msg":"Bad Request"});
+  }
+
+  var datetime = new Date();
+  Post.insert(
+        req.body.titulo,
+        req.body.texto,
+        req.params.idProfessor,
+        datetime,
+        req.file.filename,
+      )
+  .then( (success) => {
+        if (success == undefined)
+          res.status(500).send({message: 'Internal Error'});
+        else
+          res.status(201).send({message: 'Ok'});
+  });
+}
+
+
 module.exports = {
   getPosts: _getPosts,
   getAllPosts:_getAllPosts,
   getPost: _getPost,
-  insertPost: _insertPost,
+  teste: _teste,
   deletePost:_deletePost,
   updatePost: _updatePost
 }
