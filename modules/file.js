@@ -6,7 +6,6 @@ var path = require('path');
 
 var myStorage = multer.diskStorage({
     destination: function (req, file, cb) {
-      console.log(req.params)
       cb(null, '/data/user/professor/' + req.params.idProfessor);
     },
     filename: function (req, file, cb) {

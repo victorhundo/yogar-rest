@@ -14,11 +14,14 @@ routerAuthID.use(auth.authorizeUser);
 // Aluno routes
 router.route('/')
     .get(post.getPosts)
-    .post(upload.single('theFile'), post.teste); 
+    .post(upload.single('theFile'), post.insertPost);
 
 router.route('/:id')
-    .get(routerAuthID, post.getPost)
+    .get(post.getPost)
     .delete(routerAuthID, post.deletePost)
     .put(routerAuthID, post.updatePost);
+
+router.route('/:id/img')
+    .get(post.getPostImg)
 
 module.exports = router;

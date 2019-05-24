@@ -4,6 +4,8 @@ var db = require('../modules/db');
 var file = require('../modules/file');
 var query = require('../modules/query');
 var uuidv1 = require('uuid/v1');
+var fs = require('fs');
+
 
 
 /*
@@ -36,7 +38,7 @@ var _getPosts = (req, res) => {
   GET /professores/:idProfessor/posts/:id
 */
 var _getPost = (req, res) => {
-  Aluno.find(req.params.idProfessor, req.params.id)
+  Post.find(req.params.idProfessor, Number(req.params.id))
   .then((sucess) => {
       var post = sucess;
       res.status(200).send(post);
@@ -49,7 +51,7 @@ var _getPost = (req, res) => {
 var _deletePost = (req, res) => {
   Post.delete(req.params.id)
   .then((sucess) => {
-    return Aluno.find(req.params.id)
+    return Post.find(req.params.id)
   })
   .then((sucess) => {
     if(sucess.length <= 0)
@@ -75,7 +77,7 @@ var _updatePost = (req, res) => {
   });
 }
 
-var _teste = (req,res) => {
+var _insertPost = (req,res) => {
   if (req.params.idProfessor == undefined ) {
     return res.status(400).send({"msg":"Bad Request"});
   }
@@ -97,11 +99,26 @@ var _teste = (req,res) => {
 }
 
 
+var _getPostImg = (req,res) => {
+  Post.find(req.params.idProfessor, Number(req.params.id))
+  .then((sucess) => {
+      try{
+        var bitmap = fs.readFileSync('/data/user/professor/' + req.params.idProfessor + '/' + sucess[0]["img"]);
+        res.writeHead(200,{'Content-type':'image'});
+        res.end(bitmap);
+      }catch (err){
+        console.log(err);
+        res.send('No file found');
+      }
+  });
+}
+
 module.exports = {
   getPosts: _getPosts,
   getAllPosts:_getAllPosts,
   getPost: _getPost,
-  teste: _teste,
+  insertPost: _insertPost,
   deletePost:_deletePost,
-  updatePost: _updatePost
+  updatePost: _updatePost,
+  getPostImg: _getPostImg
 }

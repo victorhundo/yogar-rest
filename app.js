@@ -49,8 +49,6 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 var Post = require('./controllers/post');
 app.route('/posts').get(Post.getAllPosts)
 
-app.post('/mypost', upload.single('theFile'), Post.teste)
-
 app.get('/teste', (req, res) => {
   res.render('index')
 })
