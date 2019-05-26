@@ -384,12 +384,53 @@ paths:
         200:
           description: Ok
 
-  /professores/{id}/posts:
-    post:
+  /professores/{idProfessor}/posts/{id}:
+    get:
       tags:
       - posts
-      summary: Cria post do professor {id}
+      summary: Encontre o post {id} do professor {idProfessor}
       parameters:
+      - name: idProfessor
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Created
+    delete:
+      tags:
+      - posts
+      summary: Remove post do professor {id}
+      parameters:
+      - name: idProfessor
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        201:
+          description: Ok
+    put:
+      tags:
+      - posts
+      summary: Atualiza post do professor {id}
+      parameters:
+      - name: idProfessor
+        in: path
+        required: true
+        schema:
+          type: string
       - name: id
         in: path
         required: true
@@ -402,12 +443,38 @@ paths:
             schema:
               type: object
               properties:
+                campo:
+                  type: string
+                valor:
+                  type: string
+      responses:
+        200:
+          description: Ok
+
+  /professores/{id}/posts:
+    post:
+      tags:
+      - posts
+      summary: Cria post do professor {id}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
                 titulo:
                   type: string
                 texto:
                   type: string
-                img:
+                fileName:
                   type: string
+                  format: binary
       responses:
         201:
           description: Created
@@ -446,43 +513,6 @@ paths:
           description: Forbidden
         500:
           description: Internal Server Error
-    delete:
-      tags:
-      - posts
-      summary: Remove post do professor {id}
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        201:
-          description: Ok
-    put:
-      tags:
-      - posts
-      summary: Atualiza post do professor {id}
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
-      requestBody:
-        required: true
-        content:
-           application/json:
-            schema:
-              type: object
-              properties:
-                campo:
-                  type: string
-                valor:
-                  type: string
-      responses:
-        200:
-          description: Ok
 
   /auth/login:
     post:
