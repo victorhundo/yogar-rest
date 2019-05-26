@@ -30,7 +30,6 @@ var _find = function(idProfessor, id){
   } else{
     var query = util.format('SELECT * FROM `post`');
   }
-  console.log(query)
   return db.mysqlExec(query);
 }
 
