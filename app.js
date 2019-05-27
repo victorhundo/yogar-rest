@@ -49,6 +49,9 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 var Post = require('./controllers/post');
 app.route('/posts').get(Post.getAllPosts)
 
+var Licao = require('./controllers/licao');
+app.route('/licoes').get(Licao.getLicoes)
+
 app.get('/teste', (req, res) => {
   res.render('index')
 })

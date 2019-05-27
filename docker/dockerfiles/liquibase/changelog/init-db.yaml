@@ -121,3 +121,37 @@ databaseChangeLog:
               - column:
                   name: img
                   type: varchar(255)
+        - createTable:
+            tableName: licao
+            columns:
+              - column:
+                  name: id
+                  type: int(11)
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: uuidProfessor
+                  type: varchar(255)
+                  references: professor(uuid)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: titulo
+                  type: varchar(50)
+              - column:
+                  name: descricao
+                  type: varchar(50)
+              - column:
+                  name: nivel
+                  type: int(11)
+              - column:
+                  name: tag
+                  type: varchar(50)
+              - column:
+                  name: video
+                  type: varchar(255)
+              - column:
+                  name: ehPremium
+                  type: boolean

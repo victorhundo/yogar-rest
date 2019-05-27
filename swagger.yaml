@@ -11,6 +11,7 @@ tags:
 - name: professores
 - name: posts
 - name: auth
+- name: lição
 paths:
   /alunos:
     post:
@@ -451,13 +452,13 @@ paths:
         200:
           description: Ok
 
-  /professores/{id}/posts:
+  /professores/{idProfessor}/posts:
     post:
       tags:
       - posts
       summary: Cria post do professor {id}
       parameters:
-      - name: id
+      - name: idProfessor
         in: path
         required: true
         schema:
@@ -472,7 +473,7 @@ paths:
                   type: string
                 texto:
                   type: string
-                fileName:
+                theFile:
                   type: string
                   format: binary
       responses:
@@ -544,3 +545,198 @@ paths:
                     type: string
                   user:
                     type: object
+
+  /professores/{idProfessor}/licoes/{id}:
+    get:
+      tags:
+      - lição
+      summary: Encontre a lição {id} do professor {idProfessor}
+      parameters:
+      - name: idProfessor
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Created
+    delete:
+      tags:
+      - lição
+      summary: Remove lição do professor {id}
+      parameters:
+      - name: idProfessor
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        201:
+          description: Ok
+    put:
+      tags:
+      - lição
+      summary: Atualiza lição do professor {id}
+      parameters:
+      - name: idProfessor
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+           application/json:
+            schema:
+              type: object
+              properties:
+                campo:
+                  type: string
+                valor:
+                  type: string
+      responses:
+        200:
+          description: Ok
+
+
+  /professores/{idProfessor}/licoes/{id}/video:
+    get:
+        tags:
+        - lição
+        summary: Retorna video da lição
+        parameters:
+        - name: idProfessor
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+        responses:
+          200:
+            description: Ok
+            content:
+              video/mp4:
+                schema:
+                  type: string
+                  format: binary
+          403:
+            description: Forbidden
+          500:
+            description: Internal Server Error
+
+  /professores/{idProfessor}/licoes/{id}/img:
+    get:
+        tags:
+        - posts
+        summary: Retorna imagem do post
+        parameters:
+        - name: idProfessor
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+        responses:
+          200:
+            description: Ok
+            content:
+              video/mp4:
+                schema:
+                  type: string
+                  format: binary
+          403:
+            description: Forbidden
+          500:
+            description: Internal Server Error
+
+  /professores/{id}/licoes:
+    post:
+      tags:
+      - lição
+      summary: Cria licao do professor {id}
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                titulo:
+                  type: string
+                descricao:
+                  type: string
+                nivel:
+                  type: number
+                tag:
+                  type: string
+                ehPremium:
+                  type: boolean
+                theFile:
+                  type: string
+                  format: binary
+      responses:
+        201:
+          description: Created
+    get:
+      tags:
+      - lição
+      summary: Encontre licao do professor id
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Ok
+          content:
+            application:
+              schema:
+                type: object
+                properties:
+                  nome:
+                    type: object
+                    properties:
+                      titulo:
+                        type: string
+                      texto:
+                        type: string
+                      uuidProfessor:
+                        type: string
+                      data:
+                        type: string
+                      img:
+                        type: string
+        403:
+          description: Forbidden
+        500:
+          description: Internal Server Error
