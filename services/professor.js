@@ -2,6 +2,7 @@
 const express = require('express');
 var auth = require('../modules/authControl');
 var posts = require('./post');
+var licoes = require('./licao');
 
 //controllers
 var professor = require('../controllers/professor');
@@ -13,6 +14,7 @@ var router = express.Router({ mergeParams: true });
 routerAuthID.use(auth.authorizeUser);
 
 router.use('/:idProfessor/posts', posts);
+router.use('/:idProfessor/licoes', licoes);
 
 // professor routes
 router.route('/')

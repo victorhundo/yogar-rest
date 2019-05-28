@@ -16,7 +16,7 @@ var myStorage = multer.diskStorage({
 module.exports = multer({
   storage: myStorage,
   fileFilter: (req, file, cb) => {
-    if (!file.mimetype.match(/jpe|jpeg|png|gif$i/)) {
+    if (!file.mimetype.match(/jpe|jpeg|png|mp4|$i/)) {
       cb(new Error('File is not supported'), false)
       return
     }
