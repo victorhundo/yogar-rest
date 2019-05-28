@@ -2,6 +2,7 @@ var util = require('util');
 var db = require('../modules/db');
 
 var _insert = function(titulo, texto, uuidProfessor, datetime, img){
+  texto = "\'" + texto + "\'"
   argsEscaped = db.escapeArgs(arguments);
   var query = util.format(
     'INSERT INTO post (\

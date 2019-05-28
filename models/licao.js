@@ -2,6 +2,7 @@ var util = require('util');
 var db = require('../modules/db');
 
 var _insert = function(uuidProfessor, titulo, descricao, nivel, tag, video, ehPremium){
+  texto = "\'" + descricao + "\'"
   argsEscaped = db.escapeArgs(arguments);
   var query = util.format(
     'INSERT INTO licao (\
