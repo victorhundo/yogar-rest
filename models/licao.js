@@ -1,7 +1,9 @@
 var util = require('util');
 var db = require('../modules/db');
+var SqlString = require('sqlstring');
 
 var _insert = function(uuidProfessor, titulo, descricao, nivel, tag, video, ehPremium){
+  descricao = SqlString.escape(descricao);
   argsEscaped = db.escapeArgs(arguments);
   var query = util.format(
     'INSERT INTO licao (\

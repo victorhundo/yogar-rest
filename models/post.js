@@ -1,7 +1,9 @@
 var util = require('util');
 var db = require('../modules/db');
+var SqlString = require('sqlstring');
 
 var _insert = function(titulo, texto, uuidProfessor, datetime, img){
+  texto = SqlString.escape(texto);
   argsEscaped = db.escapeArgs(arguments);
   var query = util.format(
     'INSERT INTO post (\
