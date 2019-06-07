@@ -147,6 +147,9 @@ databaseChangeLog:
                   name: nivel
                   type: int(11)
               - column:
+                  name: recompensa
+                  type: int(11)
+              - column:
                   name: tag
                   type: varchar(50)
               - column:

@@ -2,14 +2,14 @@ var util = require('util');
 var db = require('../modules/db');
 var SqlString = require('sqlstring');
 
-var _insert = function(uuidProfessor, titulo, descricao, nivel, tag, video, ehPremium){
+var _insert = function(uuidProfessor, titulo, descricao, nivel, tag, video, ehPremium, recompensa){
   descricao = SqlString.escape(descricao);
   argsEscaped = db.escapeArgs(arguments);
   var query = util.format(
     'INSERT INTO licao (\
-      uuidProfessor, titulo, descricao, nivel, tag, video, ehPremium) \
-    VALUES (%s, %s, %s, %s, %s, %s, %s);',
-    uuidProfessor, titulo, descricao, nivel, tag, video, ehPremium);
+      uuidProfessor, titulo, descricao, nivel, tag, video, ehPremium, recompensa) \
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s);',
+    uuidProfessor, titulo, descricao, nivel, tag, video, ehPremium, recompensa);
   return db.mysqlExec(query);
 }
 
