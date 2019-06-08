@@ -7,7 +7,8 @@ describe('==== LICOES ====', () => {
     "descricao": "descricao",
     "nivel": 1,
     "tag": "iniciante",
-    "ehPremium": false
+    "ehPremium": false,
+    "recompensa": 10
   }
 
   var licaoModel2 = {
@@ -16,7 +17,8 @@ describe('==== LICOES ====', () => {
     "descricao": "descricao2",
     "nivel": 2,
     "tag": "iniciante",
-    "ehPremium": false
+    "ehPremium": false,
+    "recompensa": 10
   }
 
   var professorModel = {
@@ -75,6 +77,7 @@ describe('==== LICOES ====', () => {
         .field('nivel', licaoModel.nivel)
         .field('tag', licaoModel.tag)
         .field('ehPremium', licaoModel.ehPremium)
+        .field('recompensa', licaoModel.recompensa)
         .set('x-access-token', adminToken)
         .expect(201)
       })
@@ -87,6 +90,7 @@ describe('==== LICOES ====', () => {
         .field('nivel', licaoModel2.nivel)
         .field('tag', licaoModel2.tag)
         .field('ehPremium', licaoModel2.ehPremium)
+        .field('recompensa', licaoModel2.recompensa)
         .set('x-access-token', adminToken)
         .expect(201)
       })
