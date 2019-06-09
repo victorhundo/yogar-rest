@@ -41,3 +41,13 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=y0g4rp4ss
       - MYSQL_DATABASE=yogar
+
+  tensorflow:
+    build: ../dockerfiles/tensorflow
+    image: yogar-ml
+    container_name: yogar-ml
+    restart: always
+    ports:
+      - "4000:3000"
+    volumes:
+      - "../dockerfiles/tensorflow/app:/app"

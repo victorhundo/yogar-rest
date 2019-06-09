@@ -8,7 +8,8 @@ var bodyParser  = require('body-parser');
 var multer = require('multer');
 var morgan = require('morgan');
 require('shelljs/global');
-const exphbs = require('express-handlebars')
+const exphbs = require('express-handlebars');
+var proxy = require('express-http-proxy');
 
 const YAML = require('yamljs');
 const swaggerUi = require('swagger-ui-express');
@@ -51,6 +52,8 @@ app.route('/posts').get(Post.getAllPosts)
 
 var Licao = require('./controllers/licao');
 app.route('/licoes').get(Licao.getLicoes)
+
+app.use('/licoes/:id/desafio', proxy('http://yogar-ml:3000/'));
 
 app.get('/teste', (req, res) => {
   res.render('index')
