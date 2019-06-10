@@ -13,7 +13,7 @@ var myStorage = multer.diskStorage({
       cb(null, `${file.fieldname}-${Date.now()}.${path.extname(file.originalname)}`);
     }
 });
-
+ 
 module.exports = multer({
   storage: myStorage,
   fileFilter: (req, file, cb) => {

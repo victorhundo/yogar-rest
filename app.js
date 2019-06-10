@@ -9,9 +9,8 @@ var multer = require('multer');
 var morgan = require('morgan');
 require('shelljs/global');
 const exphbs = require('express-handlebars');
-var proxy = require('express-http-proxy');
 var httpProxy = require('http-proxy');
-
+ 
 const YAML = require('yamljs');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = YAML.load('./swagger.yaml');
