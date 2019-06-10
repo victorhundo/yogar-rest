@@ -31,6 +31,14 @@ describe('==== AUTH ====', () => {
       }
     }
 
+    var adminModel = {
+      "email":"admin@admin.com",
+      "login":{
+        "username":"admin",
+        "senha":"admin",
+        }
+      }
+
   describe('POST /auth/login', () => {
     it('it should LOGIN a aluno ', (done) => {
       request
@@ -70,9 +78,15 @@ describe('==== AUTH ====', () => {
 
     it('it should LOGIN a admin', (done) => {
       request
+        .post('/admins')
+        .send(adminModel)
+        .expect(201)
+      .then((res) => {
+      return request
         .post('/auth/login')
         .send({username: "admin", senha: "admin"})
         .expect(200)
+      })
       .then((res) => {
         res.body.should.have.property('type');
         res.body.type.should.equal('admin');

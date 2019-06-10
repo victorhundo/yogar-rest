@@ -10,7 +10,7 @@ var morgan = require('morgan');
 require('shelljs/global');
 const exphbs = require('express-handlebars');
 var httpProxy = require('http-proxy');
- 
+
 const YAML = require('yamljs');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = YAML.load('./swagger.yaml');
@@ -45,6 +45,7 @@ app.get('/', function (req, res) {
 aluno = require('./services/aluno');
 professor = require('./services/professor');
 auth = require('./services/auth');
+admin = require('./services/admin')
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 var Post = require('./controllers/post');
@@ -72,6 +73,7 @@ app.get('/teste', (req, res) => {
 app.use('/alunos', aluno);
 app.use('/professores', professor);
 app.use('/auth', auth);
+app.use('/admins', admin)
 
 module.exports = {
   app: app

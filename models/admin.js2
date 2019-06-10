@@ -1,22 +1,8 @@
 var util = require('util');
 var db = require('../modules/db');
 
-var _findLogin = function(username){
-    username = db.escape(username);
-    var query = util.format('SELECT username, uuid, senha \
-                             FROM `admin` WHERE `username` = %s;', username);
-  return db.mysqlExec(query);
-}
-
-var _insert = function(uuid, email, login,senha){
+var _insert = function(uuid, email, login){
   argsEscaped = db.escapeArgs(arguments);
-  var query = util.format(
-    'INSERT INTO admin (\
-      uuid, email,\
-      username, senha)\
-    VALUES (%s, %s, %s, %s);',
-    uuid, email, login.username, login.senha);
-    return db.mysqlExec(query);
 }
 
 var _delete = function(id){
@@ -33,6 +19,13 @@ var _find = function(id){
                              FROM `admin` WHERE `uuid` = %s;', id);
   } else
     var query = util.format('SELECT * FROM `admin`;');
+  return db.mysqlExec(query);
+}
+
+var _findLogin = function(username){
+    username = db.escape(username);
+    var query = util.format('SELECT email,uuid, username, senha \
+                             FROM `admin` WHERE `username` = %s;', username);
   return db.mysqlExec(query);
 }
 

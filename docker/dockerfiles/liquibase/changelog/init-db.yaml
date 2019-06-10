@@ -91,6 +91,9 @@ databaseChangeLog:
                   name: username
                   type: varchar(50)
               - column:
+                  name: email
+                  type: varchar(50)
+              - column:
                   name: senha
                   type: varchar(255)
         - createTable:
