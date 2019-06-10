@@ -24,6 +24,7 @@
     "express-http-proxy": "^1.5.1",
     "express-request-proxy": "^2.1.0",
     "express-uploadfiles": "^1.0.4",
+    "http-proxy": "^1.17.0",
     "https": "^1.0.0",
     "jsonwebtoken": "^8.5.1",
     "minimatch": "^3.0.4",
