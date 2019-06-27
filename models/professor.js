@@ -68,13 +68,15 @@ var _findLogin = function(username){
   return db.mysqlExec(query);
 }
 
-var _update = function(id, campo, valor) {
-  id = db.escape(id);
+var _update = function(uuid, campo, valor) {
+  uuid = db.escape(uuid);
   campo = db.escapeId(campo);
   valor = db.escape(valor);
 
   var query = util.format('UPDATE `professor` SET %s = %s WHERE `uuid` = %s',
-                           campo, valor, id);
+                           campo, valor, uuid);
+
+  console.log(query)
   return db.mysqlExec(query);
 }
 

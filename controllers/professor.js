@@ -43,7 +43,7 @@ var _postProfessor = (req, res) => {
     } else{
       _postProfessor(req,res);
     }
-  }) 
+  })
   .then((success) => {
     return mkdirp('/data/user/professor/' + uuid, (err) => {
       if (err) console.error(err)
@@ -77,16 +77,18 @@ var _deleteProfessor = (req, res) => {
   UPDATE /professor
 */
 var _updateProfessor = (req, res) => {
-  if (req.body.campo == 'id')
+  if (req.body.campo == 'uuid')
     res.status(403).send({message: "você não pode atualizar o ID"})
-  Professor.update(req.params.id, req.body.campo, req.body.valor)
-  .then((sucess) => {
+  else {
+    Professor.update(req.params.idProfessor, req.body.campo, req.body.valor)
+    .then((sucess) => {
       if (sucess) {
         res.status(200).send({message: "Atualização feita com sucesso"});
       } else {
         res.status(500).send({message: "Erro no servidor"});
       }
-  });
+    });
+  }
 }
 
 module.exports = {
