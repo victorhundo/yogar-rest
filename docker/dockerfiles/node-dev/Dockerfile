@@ -2,8 +2,6 @@ FROM node:latest
 
 WORKDIR /app
 
-RUN wget "https://pastebin.com/raw/C42Y4aj3" -O /etc/apt/sources.list
-
 RUN apt-get update && apt-get install -y \
     mysql-client \
 && rm -rf /var/lib/apt/lists/*

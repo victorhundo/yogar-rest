@@ -89,7 +89,8 @@ var _postLicao = (req,res) => {
         req.body.tag,
         req.file.filename,
         Boolean(req.body.ehPremium),
-        Number(req.body.recompensa)
+        Number(req.body.recompensa),
+        req.body.desafio,
       )
   .then( (success) => {
         if (success == undefined)

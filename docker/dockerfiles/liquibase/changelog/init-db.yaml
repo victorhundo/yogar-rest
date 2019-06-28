@@ -156,6 +156,9 @@ databaseChangeLog:
                   name: tag
                   type: varchar(50)
               - column:
+                  name: desafio
+                  type: varchar(50)
+              - column:
                   name: video
                   type: varchar(255)
               - column:

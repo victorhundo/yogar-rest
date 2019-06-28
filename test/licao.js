@@ -8,6 +8,7 @@ describe('==== LICOES ====', () => {
     "nivel": 1,
     "tag": "iniciante",
     "ehPremium": false,
+    "desafio": "Uttanasana-Padahastasana",
     "recompensa": 10
   }
 
@@ -18,7 +19,8 @@ describe('==== LICOES ====', () => {
     "nivel": 2,
     "tag": "iniciante",
     "ehPremium": false,
-    "recompensa": 10
+    "recompensa": 10,
+    "desafio": "Urdhva Hastasana"
   }
 
   var professorModel = {
@@ -78,6 +80,7 @@ describe('==== LICOES ====', () => {
         .field('tag', licaoModel.tag)
         .field('ehPremium', licaoModel.ehPremium)
         .field('recompensa', licaoModel.recompensa)
+        .field('desafio', licaoModel.desafio)
         .set('x-access-token', adminToken)
         .expect(201)
       })
@@ -91,6 +94,7 @@ describe('==== LICOES ====', () => {
         .field('tag', licaoModel2.tag)
         .field('ehPremium', licaoModel2.ehPremium)
         .field('recompensa', licaoModel2.recompensa)
+        .field('desafio', licaoModel2.desafio)
         .set('x-access-token', adminToken)
         .expect(201)
       })
