@@ -42,6 +42,9 @@ databaseChangeLog:
               - column:
                   name: xp
                   type: int
+              - column:
+                  name: ehPremium
+                  type: boolean
         - createTable:
             tableName: professor
             columns:
