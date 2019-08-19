@@ -23,10 +23,11 @@ var _delete = function(id){
 var _find = function(idProfessor, id){
   db.escapeArgs(arguments);
   if(id) {
+    var query = util.format('SELECT * FROM `licao` WHERE `id` = %s;', id);
   } else if (idProfessor){
     id = db.escape(id);
-    var query = util.format('SELECT * FROM `licao` WHERE `id` = %s;', id);
-    var query = util.format('SELECT * FROM `licao` WHERE `uuidProfessor` = %s;', idProfessor);
+    var query = util.format('SELECT * FROM `licao` WHERE `uuidProfessor` = %s AND `id` = %s;', idProfessor, id);
+    console.log(query);
   } else{
     var query = util.format('SELECT * FROM `licao`');
   }

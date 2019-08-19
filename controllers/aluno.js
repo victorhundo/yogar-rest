@@ -104,11 +104,29 @@ var _postAlunoXp = (req, res) => {
   })
 }
 
+/*
+  POST /aluno/:id/upgrade
+*/
+var _postAlunoUpgrade = (req, res) => {
+  Aluno.find(req.params.id)
+  .then((success) => {
+    if(success.length == 1){
+      var aluno = success[0];
+      req.body.campo = "ehPremium";
+      req.body.valor = true;
+      _updateAluno(req, res);
+    } else{
+      res.status(404).send({message: "Aluno not found."});
+    }
+  })
+}
+
 module.exports = {
   getAlunos: _getAlunos,
   getAluno: _getAluno,
   postAluno: _postAluno,
   deleteAluno:_deleteAluno,
   updateAluno: _updateAluno,
-  postAlunoXp: _postAlunoXp
+  postAlunoXp: _postAlunoXp,
+  postAlunoUpgrade: _postAlunoUpgrade
 }

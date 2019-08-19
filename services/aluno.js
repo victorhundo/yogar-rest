@@ -22,4 +22,7 @@ app.route('/:id')
 app.route('/:id/xp')
     .post(routerAuthID, aluno.postAlunoXp);
 
+app.route('/:id/upgrade')
+    .post(routerAuthID, aluno.postAlunoUpgrade);
+
 module.exports = app;
