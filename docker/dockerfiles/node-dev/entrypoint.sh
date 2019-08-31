@@ -7,9 +7,9 @@ while ping -q -c1 $LIQUIBASE > /dev/null; do
 done
 
 #Wait Machine Learning is Ready!
-while [ $(curl -s -o /dev/null -w "%{http_code}" http://yogar-ml:3000/status) != '200' ]; do
-    sleep 1
-done
+# while [ $(curl -s -o /dev/null -w "%{http_code}" http://yogar-ml:3000/status) != '200' ]; do
+#     sleep 1
+# done
 
 npm install --unsafe-perm --only=dev
  if [ -z "$TEST" ]; then

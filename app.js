@@ -15,6 +15,8 @@ const YAML = require('yamljs');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = YAML.load('./swagger.yaml');
 
+app.use(express.static(path.join('public')))
+
 app.use(bodyParser.json()).use(bodyParser.urlencoded({ extended: true }))
 // app.use(bodyParser.text());
 // app.use(bodyParser.json({ type: 'application/json'}));
