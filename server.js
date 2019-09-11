@@ -22,9 +22,14 @@ io.on('connection', function (socket) {
     console.log('user disconnected');
   });
 
+  socket.on('subscribe', function(room) {
+    console.log('joining room', room);
+    socket.join(room);
+  });
+
   socket.on('sendMessage', (data) => {
     console.log(data);
-    io.emit('sendMessage', data);
+    io.in(data.room).emit('sendMessage', data.msg);
   })
 
   socket.emit('news', { hello: 'world' });
