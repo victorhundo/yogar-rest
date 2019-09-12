@@ -48,6 +48,7 @@ aluno = require('./services/aluno');
 professor = require('./services/professor');
 auth = require('./services/auth');
 admin = require('./services/admin')
+chat = require('./services/chat')
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 var Post = require('./controllers/post');
@@ -76,6 +77,7 @@ app.use('/alunos', aluno);
 app.use('/professores', professor);
 app.use('/auth', auth);
 app.use('/admins', admin)
+app.use('/chat', chat)
 
 module.exports = {
   app: app

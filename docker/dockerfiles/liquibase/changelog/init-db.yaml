@@ -167,3 +167,45 @@ databaseChangeLog:
               - column:
                   name: ehPremium
                   type: boolean
+        - createTable:
+            tableName: chat
+            columns:
+              - column:
+                  name: id
+                  type: int(11)
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: uuid
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: uuidProfessor
+                  type: varchar(255)
+                  references: professor(uuid)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: uuidAluno
+                  type: varchar(255)
+                  references: aluno(uuid)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: idLicao
+                  type: int(11)
+                  references: licao(id)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: data
+                  type: date
+              - column:
+                  name: msg
+                  type: varchar(50)
+              - column:
+                  name: remetente
+                  type: varchar(50)
