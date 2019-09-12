@@ -20,12 +20,30 @@ var _getChats = (req, res) => {
   GET /chat/:id
 */
 var _getChat = (req, res) => {
-  Chat.find(req.params.id)
-  .then((sucess) => {
+  if (req.params.id.length > 36){
+    Chat.find(req.params.id)
+    .then((sucess) => {
       var chat = sucess;
       res.status(200).send(chat);
+    });
+  }else {
+    Chat.findProfessor(req.params.id)
+    .then((sucess) => {
+      var chat = sucess;
+      res.status(200).send(chat);
+    });
+  }
+}
+
+var _getAlunoChats = (req, res) => {
+  Chat.findAlunos(req.params.id)
+  .then((sucess) => {
+    var chat = sucess;
+    res.status(200).send(chat);
   });
 }
+
+
 
 /*
   Create chat
@@ -39,7 +57,8 @@ var _postChat = (obj) => {
         obj.licao,
         datetime,
         obj.msg,
-        obj.remetente
+        obj.remetente,
+        obj.alunoNome
       )
 }
 
@@ -48,4 +67,5 @@ module.exports = {
   getChats: _getChats,
   getChat: _getChat,
   postChat: _postChat,
+  getAlunoChats:_getAlunoChats,
 }

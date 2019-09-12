@@ -11,4 +11,11 @@ app.route('/')
 app.route('/:id')
     .get(chat.getChat)
 
+app.route('/:id/alunos')
+    .get(chat.getAlunoChats)
+
+app.route('/:id/alunos/:idAluno/')
+    .get(chat.getChats)
+
+
 module.exports = app;

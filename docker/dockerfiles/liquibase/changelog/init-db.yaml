@@ -209,3 +209,6 @@ databaseChangeLog:
               - column:
                   name: remetente
                   type: varchar(50)
+              - column:
+                  name: alunoNome
+                  type: varchar(50)

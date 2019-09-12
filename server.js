@@ -32,7 +32,7 @@ io.on('connection', function (socket) {
   socket.on('sendMessage', (data) => {
     console.log(data);
     chat.postChat(data);
-    io.in(data.room).emit('sendMessage', data.msg);
+    io.in(data.room).emit('sendMessage', data);
   })
 
 });
