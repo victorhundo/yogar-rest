@@ -212,3 +212,6 @@ databaseChangeLog:
               - column:
                   name: alunoNome
                   type: varchar(50)
+              - column:
+                  name: licaoTitulo
+                  type: varchar(50)

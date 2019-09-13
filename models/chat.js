@@ -1,13 +1,13 @@
 var util = require('util');
 var db = require('../modules/db');
 
-var _insert = function(uuid, uuidProfessor, uuidAluno,idLicao,data,msg,remetente, alunoNome){
+var _insert = function(uuid, uuidProfessor, uuidAluno,idLicao,data,msg,remetente, alunoNome, licaoTitulo){
   argsEscaped = db.escapeArgs(arguments);
   var query = util.format(
     'INSERT INTO chat (\
-      uuid, uuidProfessor, uuidAluno, idLicao, data, msg, remetente, alunoNome)\
-    VALUES (%s,%s, %s, %s, %s,%s,%s, %s);',
-    uuid, uuidProfessor, uuidAluno,idLicao,data,msg,remetente, alunoNome);
+      uuid, uuidProfessor, uuidAluno, idLicao, data, msg, remetente, alunoNome, licaoTitulo)\
+    VALUES (%s,%s, %s, %s, %s,%s,%s, %s, %s);',
+    uuid, uuidProfessor, uuidAluno,idLicao,data,msg,remetente, alunoNome,licaoTitulo);
     return db.mysqlExec(query);
 }
 
@@ -32,6 +32,13 @@ var _findAlunos = function(id){
   return db.mysqlExec(query);
 }
 
+var _findChatsByAluno = function(id, idAluno){
+  id = db.escape(id);
+  idAluno = db.escape(idAluno);
+  var query = util.format('SELECT DISTINCT uuid,licaoTitulo from `chat` where `uuidProfessor`=%s and `uuidAluno`=%s', id,idAluno);
+  return db.mysqlExec(query);
+}
+
 
 
 
@@ -39,5 +46,6 @@ module.exports = {
   find:_find,
   insert:_insert,
   findProfessor:_findProfessor,
-  findAlunos:_findAlunos
+  findAlunos:_findAlunos,
+  findChatsByAluno:_findChatsByAluno,
 }

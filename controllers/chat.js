@@ -27,23 +27,35 @@ var _getChat = (req, res) => {
       res.status(200).send(chat);
     });
   }else {
-    Chat.findProfessor(req.params.id)
-    .then((sucess) => {
-      var chat = sucess;
-      res.status(200).send(chat);
-    });
+    _getAlunoChats(req,res);
   }
 }
 
 var _getAlunoChats = (req, res) => {
   Chat.findAlunos(req.params.id)
   .then((sucess) => {
+    const chats = sucess;
+
+    async function setChats(){
+      for(const [idx,chat] of chats.entries()){
+        const saida = await Chat.findChatsByAluno(req.params.id, chat["uuidAluno"]);
+        chat["chats"] = saida;
+      }
+    }
+
+    setChats().then((sucess) => {
+      res.status(200).send(chats);
+    })
+  });
+}
+
+var _getChatsByAluno = (req, res) => {
+  Chat.findChatsByAluno(req.params.id, req.params.idAluno)
+  .then((sucess) => {
     var chat = sucess;
     res.status(200).send(chat);
   });
 }
-
-
 
 /*
   Create chat
@@ -58,7 +70,8 @@ var _postChat = (obj) => {
         datetime,
         obj.msg,
         obj.remetente,
-        obj.alunoNome
+        obj.alunoNome,
+        obj.licaoTitulo
       )
 }
 
@@ -68,4 +81,5 @@ module.exports = {
   getChat: _getChat,
   postChat: _postChat,
   getAlunoChats:_getAlunoChats,
+  getChatsByAluno:_getChatsByAluno,
 }
