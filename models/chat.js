@@ -3,6 +3,7 @@ var db = require('../modules/db');
 
 var _insert = function(uuid, uuidProfessor, uuidAluno,idLicao,data,msg,remetente, alunoNome, licaoTitulo){
   argsEscaped = db.escapeArgs(arguments);
+  msg = db.escape(msg);
   var query = util.format(
     'INSERT INTO chat (\
       uuid, uuidProfessor, uuidAluno, idLicao, data, msg, remetente, alunoNome, licaoTitulo)\
