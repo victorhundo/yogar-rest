@@ -18,7 +18,7 @@ var _insert = function(titulo, texto, uuidProfessor, datetime, img){
 var _delete = function(id){
   id = db.escape(id);
   var query = util.format(
-  'DELETE FROM `post` WHERE `uuid` = %s ;', id);
+  'DELETE FROM `post` WHERE `id` = %s ;', id);
   return db.mysqlExec(query);
 }
 
