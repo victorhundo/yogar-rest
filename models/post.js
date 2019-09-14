@@ -41,7 +41,7 @@ var _update = function(id, campo, valor) {
   campo = db.escapeId(campo);
   valor = db.escape(valor);
 
-  var query = util.format('UPDATE `post` SET %s = %s WHERE `uuid` = %s',
+  var query = util.format('UPDATE `post` SET %s = %s WHERE `id` = %s',
                            campo, valor, id);
   return db.mysqlExec(query);
 }
