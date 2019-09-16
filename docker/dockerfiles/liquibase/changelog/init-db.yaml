@@ -205,7 +205,7 @@ databaseChangeLog:
                   type: date
               - column:
                   name: msg
-                  type: varchar(50)
+                  type: longtext
               - column:
                   name: remetente
                   type: varchar(50)
