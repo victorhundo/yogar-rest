@@ -19,7 +19,7 @@
     "config": "^1.31.0",
     "cors": "^2.8.4",
     "crypto": "^0.0.3",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "express-handlebars": "^3.1.0",
     "express-request-proxy": "^2.1.0",
     "express-uploadfiles": "^1.0.4",
