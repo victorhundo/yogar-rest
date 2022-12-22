@@ -25,7 +25,7 @@
     "express-uploadfiles": "^1.0.4",
     "http-proxy": "^1.17.0",
     "https": "^1.0.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "minimatch": "^3.0.4",
     "mkdirp": "^0.5.1",
     "morgan": "^1.8.1",
